@@ -16,6 +16,8 @@ best_solutions.append(solutions) #If number of statues left to build is 0 the be
 solutions = [1 for i in possible_no_printers]
 best_solutions.append(solutions) #If number of statues left to build is 1 the best number of days until finished is 1 regardless of how many printers you have.
 
+# best_solutions is indexed as follows: best_solutions[number of statues left to build][number of printers -1]
+
 for k in range(n-1):
     s=k+2 # want to iterate from 2 to n statues left to build.
     best_solutions.append([])
@@ -24,8 +26,8 @@ for k in range(n-1):
             best_solutions[s].insert(0,1)
         else:
             possible_solutions = []
-            for x in range(max([0,2*no_printers - n]),no_printers+1): # For each feasible choice of number of statues to build:
-                possible_solutions.append(1+best_solutions[s-x][min([2*no_printers - x,n])-1])
+            for x in range(max([0,2*no_printers - n]),no_printers): # For each feasible choice of number of statues to build:
+                possible_solutions.append(1+best_solutions[s-x][min([2*no_printers - x,n])-no_printers])
             best_solutions[s].insert(0,min(possible_solutions)) # Insert Optimal solution to number of days left for that choice if acting optimally after the choice
 
-print(best_solutions[n-1][1-1]) # n statues to build, 1 printer at hand.
+print(best_solutions[n][0]) # n statues to build, 1 printer at hand.
